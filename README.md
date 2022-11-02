@@ -18,6 +18,8 @@ Add below lines to your dockerfile
 ```dockerfile
 COPY --from=dphadatare/phpexcel:latest /usr/local/lib/php/extensions/no-debug-non-zts-20180731/excel.so /usr/local/lib/php/extensions/no-debug-non-zts-20180731/
 COPY --from=dphadatare/phpexcel:latest /usr/lib/libxl.so /usr/lib/
+
+RUN docker-php-ext-enable excel
 ```
 
 Optionaly, we can create the excel.ini file to configure excel, you can refer to the excel.ini file for reference. Copy that file to your repository and use below code line in dockerfile
