@@ -32,4 +32,24 @@ COPY ./docker/excel.ini /usr/local/etc/php/conf.d/excel.ini
 
 For examples please refer to link [here](https://github.com/iliaal/php_excel) 
 
+## How to update the images
+#### First update the git repository
+* Clone repository to your local PC and add changes to your local branch
 
+````
+$ git clone git@github.com:entrata/docker-php-excel.git
+$ cd docker-php-excel
+$ git checkout staging
+````
+
+* Open the versions-helper.json file **if this is a version update**
+* Update version number
+* OR make what ever changes you think will improve the images
+* Run the update.sh script once
+
+````
+$ ./update.sh
+````
+
+* Commit the changes
+* Push changes to your branch and create PR

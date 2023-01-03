@@ -1,0 +1,39 @@
+{
+  "php7": {
+    "php": "7.0",
+    "branch": "php7_with_pulls",
+    "phpVersions": {
+      "7.3": {
+        "zts": "20180731"
+      },
+      "7.4": {
+        "zts": "20190902"
+      }
+    },
+    "aliases": [
+      7
+    ],
+    "libxlVersion": "4.0.4",
+    "variant": "apache",
+    "variants": [
+      "apache"
+    ]
+  },
+  "php8": {
+    "php": "8.0",
+    "branch": "php7_with_pulls",
+    "phpVersions": {
+      "8.1": {
+        "zts": "20210902"
+      }
+    },
+    "aliases": [
+      8
+    ],
+    "libxlVersion": "4.0.4",
+    "variant": "apache",
+    "variants": [
+      "apache"
+    ]
+  }
+}

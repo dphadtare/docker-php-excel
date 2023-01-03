@@ -1,0 +1,37 @@
+{
+  "php7": {
+    "aliases": [
+      7
+    ],
+    "branch": "php7_with_pulls",
+    "excel_url": "https://github.com/Jan-E/php_excel.git",
+    "libxlVersion": "4.0.4",
+    "libxl_url": "http://www.libxl.com/download/libxl-lin-4.0.4.tar.gz",
+    "php": "7.0",
+    "phpVersions": [
+      "7.3",
+      "7.4"
+    ],
+    "variant": "apache",
+    "variants": [
+      "apache"
+    ]
+  },
+  "php8": {
+    "aliases": [
+      8
+    ],
+    "branch": "php7_with_pulls",
+    "excel_url": "https://github.com/Jan-E/php_excel.git",
+    "libxlVersion": "4.0.4",
+    "libxl_url": "http://www.libxl.com/download/libxl-lin-4.0.4.tar.gz",
+    "php": "8.0",
+    "phpVersions": [
+      "8.1"
+    ],
+    "variant": "apache",
+    "variants": [
+      "apache"
+    ]
+  }
+}
