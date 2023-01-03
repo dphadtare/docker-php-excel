@@ -19,6 +19,8 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -34,23 +36,19 @@ jobs:
       -
         name: Build and push the images
         run: |
-          IMAGE_NAME="dphadatare/phpexcel"
+          IMAGE_NAME=dphadatare/phpexcel
           for versionFilePath in $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} ${{ github.event.before }} | grep "Dockerfile");
           do
             if [ "${versionFilePath}" != "Dockerfile.template" ]; then
-
               folder=${versionFilePath%"/Dockerfile"}
               folderName=${folder#*/}
               versionName="${folderName////-}"
-
               tmpName="image-$RANDOM"
               docker build $folder --file $folder/Dockerfile --tag $tmpName
               IMAGE_ID=$IMAGE_NAME
               VERSION=$versionName
-
               echo IMAGE_ID=$IMAGE_ID
               echo VERSION=$VERSION
-
               docker tag $tmpName $IMAGE_ID:$VERSION
               docker push $IMAGE_ID:$VERSION
             fi
