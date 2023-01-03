@@ -20,21 +20,6 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       -
-        name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: dphadatare/phpexcel
-          tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
-            type=raw,value=latest,enable={{is_default_branch}}
-      -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       -
@@ -47,11 +32,26 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+        name: Build and push the images
+        run: |
+          IMAGE_NAME="dphadatare/phpexcel"
+          for versionFilePath in $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} ${{ github.event.before }} | grep "Dockerfile");
+          do
+            if [ "${versionFilePath}" != "Dockerfile.template" ]; then
+
+              folder=${versionFilePath%"/Dockerfile"}
+              folderName=${folder#*/}
+              versionName="${folderName////-}"
+
+              tmpName="image-$RANDOM"
+              docker build $folder --file $folder/Dockerfile --tag $tmpName
+              IMAGE_ID=$IMAGE_NAME
+              VERSION=$versionName
+
+              echo IMAGE_ID=$IMAGE_ID
+              echo VERSION=$VERSION
+
+              docker tag $tmpName $IMAGE_ID:$VERSION
+              docker push $IMAGE_ID:$VERSION
+            fi
+          done;
