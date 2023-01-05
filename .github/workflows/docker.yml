@@ -47,7 +47,8 @@ jobs:
 
               IMAGE_ID="dphadatare/phpexcel"
 
-              docker buildx build $folder --file $folder/Dockerfile --tag $versionName --platform linux/amd64,linux/arm64
+              docker buildx create --name mydockerbuilder --driver docker-container --bootstrap --use
+              docker buildx build $folder --file $folder/Dockerfile --tag $versionName --platform linux/amd64,linux/arm64 --load
 
               echo $IMAGE_ID
               echo $versionName
@@ -70,9 +71,10 @@ jobs:
 
                 for aliase in "${variants[@]}"; do
                   docker tag $versionName $IMAGE_ID:$aliase
+                  docker push $IMAGE_ID:$aliase
                 done
               fi
 
-              docker push --all-tags $IMAGE_ID:$versionName
+              docker push $IMAGE_ID:$versionName
             fi
           done;
