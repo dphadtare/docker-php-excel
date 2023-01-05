@@ -38,7 +38,7 @@ jobs:
         run: |
           for versionFilePath in $(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} ${{ github.event.before }} | grep "Dockerfile");
           do
-            if [ "${versionFilePath}" != "Dockerfile.template" ]; then
+            if [[ "${versionFilePath}" != "Dockerfile.template" && "${versionFilePath}" != "Dockerfile" ]]; then
               folder=${versionFilePath%"/Dockerfile"}
               folderName=${folder#*/}
               versionName="${folderName////-}"

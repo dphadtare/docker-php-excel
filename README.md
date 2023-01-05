@@ -37,7 +37,7 @@ For examples please refer to link [here](https://github.com/iliaal/php_excel)
 * Clone repository to your local PC and add changes to your local branch
 
 ````
-$ git clone git@github.com:entrata/docker-php-excel.git
+$ git clone git@github.com:dphadtare/docker-php-excel.git
 $ cd docker-php-excel
 $ git checkout staging
 ````
@@ -46,6 +46,7 @@ $ git checkout staging
 * Update version number
 * OR make what ever changes you think will improve the images
 * Run the update.sh script once
+  * update.sh will generate the dockerfiles for each version specified in version-helper.json by applying the dockerfile.template
 
 ````
 $ ./update.sh
@@ -53,3 +54,6 @@ $ ./update.sh
 
 * Commit the changes
 * Push changes to your branch and create PR
+
+#### Push images to Docker Hub
+* Github actions is used to push images to docker hub
