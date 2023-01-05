@@ -40,20 +40,39 @@ jobs:
           do
             if [[ "${versionFilePath}" != "Dockerfile.template" && "${versionFilePath}" != "Dockerfile" ]]; then
               folder=${versionFilePath%"/Dockerfile"}
-              folderName=${folder#*/}
-              versionName="${folderName////-}"
-              tmpName="image-$RANDOM"
-              IMAGE_NAME="dphadatare/phpexcel"
 
-              docker build $folder --file $folder/Dockerfile --tag $tmpName
+              IFS='/' read -r -a image_path <<<"$folder"
+              versionFolder="${image_path[0]}"
+              versionName="${image_path[1]}"
 
-              IMAGE_ID=$IMAGE_NAME
-              VERSION=$versionName
+              IMAGE_ID="dphadatare/phpexcel"
 
-              echo IMAGE_ID=$IMAGE_ID
-              echo VERSION=$VERSION
+              docker buildx build $folder --file $folder/Dockerfile --tag $versionName --platform linux/amd64,linux/arm64
 
-              docker tag $tmpName $IMAGE_ID:$VERSION
-              docker push $IMAGE_ID:$VERSION
+              echo $IMAGE_ID
+              echo $versionName
+
+              if [ -f .versions.json ]; then
+                  versionsHelper="$(<.versions.json)"
+              elif [ -f versions.json ]; then
+                versionsHelper="$(<versions.json)"
+              else
+                echo "versions.json file not found!"
+                exit 1
+              fi
+
+              folderAliases=$(echo $versionsHelper | jq -r '.["'"${versionFolder}"'"].aliases')
+              versionAliases=$(echo $folderAliases | jq -r '.["'"${versionName}"'"]')
+
+              if [ "${versionAliases}" != null ]; then
+                versionAliases="$(echo "${versionAliases}" | jq -r 'map(@sh) | join(" ")')"
+                eval "versionAliases=( $versionAliases )"
+
+                for aliase in "${variants[@]}"; do
+                  docker tag $versionName $IMAGE_ID:$aliase
+                done
+              fi
+
+              docker push --all-tags $IMAGE_ID:$versionName
             fi
           done;

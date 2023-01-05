@@ -4,12 +4,12 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM php:7.4-apache
+FROM --platform=$BUILDPLATFORM php:7.3-apache
 LABEL maintainer="Chase Pierce <cpierce@entrata.com> (@syntaqx), Dattatray Phadatare <dphadatare@entrata.com> (@dphadtare)"
 
 ARG DISTRO=lin
 ARG LIBXL_VER=4.0.4
-ARG LIBXL_ZTS=20190902
+ARG LIBXL_ZTS=20180731
 ARG libxl_file=libxl-${DISTRO}-${LIBXL_VER}
 
 # Install libXL

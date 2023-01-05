@@ -4,7 +4,7 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM php:8.1-apache
+FROM --platform=$BUILDPLATFORM php:8.1-apache
 LABEL maintainer="Chase Pierce <cpierce@entrata.com> (@syntaqx), Dattatray Phadatare <dphadatare@entrata.com> (@dphadtare)"
 
 ARG DISTRO=lin
