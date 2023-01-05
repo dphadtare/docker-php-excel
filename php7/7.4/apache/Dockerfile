@@ -5,7 +5,7 @@
 #
 
 FROM --platform=$BUILDPLATFORM php:7.4-apache
-LABEL maintainer="Chase Pierce <cpierce@entrata.com> (@syntaqx), Dattatray Phadatare <dphadatare@entrata.com> (@dphadtare)"
+LABEL maintainer="Dattatray Phadatare <dattatrayphadtare@gmail.com> (@dphadtare)"
 
 ARG DISTRO=lin
 ARG LIBXL_VER=4.0.4

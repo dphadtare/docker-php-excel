@@ -5,7 +5,7 @@
 #
 
 FROM --platform=$BUILDPLATFORM php:7.3-apache
-LABEL maintainer="Chase Pierce <cpierce@entrata.com> (@syntaqx), Dattatray Phadatare <dphadatare@entrata.com> (@dphadtare)"
+LABEL maintainer="Dattatray Phadatare <dattatrayphadtare@gmail.com> (@dphadtare)"
 
 ARG DISTRO=lin
 ARG LIBXL_VER=4.0.4
@@ -36,5 +36,5 @@ RUN set -ex; \
   && cp /tmp/php_excel/modules/excel.so /usr/local/lib/php/extensions/no-debug-non-zts-${LIBXL_ZTS}/ \
   && cp /tmp/libxl-${LIBXL_VER}.0/lib64/libxl.so /usr/lib/libxl.so \
   && apt-get remove -y wget git \
-  && docker-php-source delete \
+  && docker-php-source delete
 

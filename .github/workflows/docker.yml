@@ -47,8 +47,6 @@ jobs:
 
               IMAGE_ID="dphadatare/phpexcel"
 
-              docker buildx build $folder --file $folder/Dockerfile --tag $versionName --platform linux/amd64,linux/arm64
-
               echo $IMAGE_ID
               echo $versionName
 
@@ -64,17 +62,16 @@ jobs:
               folderAliases=$(echo $versionsHelper | jq -r '.["'"${versionFolder}"'"].aliases')
               versionAliases=$(echo $folderAliases | jq -r '.["'"${versionName}"'"]')
 
+              tags=""
               if [ "${versionAliases}" != null ]; then
                 versionAliases="$(echo "${versionAliases}" | jq -r 'map(@sh) | join(" ")')"
                 eval "versionAliases=( $versionAliases )"
 
                 for aliase in "${variants[@]}"; do
-                  docker tag $versionName $IMAGE_ID:$aliase
-                  docker push $IMAGE_ID:$aliase
+                  tags="${tags} -t $IMAGE_ID:$aliase "
                 done
               fi
 
-              docker tag $versionName $IMAGE_ID:$versionName
-              docker push $IMAGE_ID:$versionName
+              docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_ID:$versionName $tags --push $folder --file $folder/Dockerfile
             fi
           done;
