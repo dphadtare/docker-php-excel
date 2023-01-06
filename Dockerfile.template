@@ -1,4 +1,4 @@
-FROM php:{{ env.phpVersion }}-{{ env.variant }}
+FROM --platform=$BUILDPLATFORM php:{{ env.phpVersion }}-{{ env.variant }}
 LABEL maintainer="{{ env.maintainers }}"
 
 ARG DISTRO=lin

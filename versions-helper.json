@@ -10,9 +10,11 @@
         "zts": "20190902"
       }
     },
-    "aliases": [
-      7
-    ],
+    "aliases": {
+      "7.4": [
+        7
+      ]
+    },
     "libxlVersion": "4.0.4",
     "variant": "apache",
     "variants": [
@@ -23,13 +25,19 @@
     "php": "8.0",
     "branch": "php7_with_pulls",
     "phpVersions": {
+      "8.2": {
+        "zts": "20220829"
+      },
       "8.1": {
         "zts": "20210902"
       }
     },
-    "aliases": [
-      8
-    ],
+    "aliases": {
+      "8.2": [
+        "latest",
+        8
+      ]
+    },
     "libxlVersion": "4.0.4",
     "variant": "apache",
     "variants": [

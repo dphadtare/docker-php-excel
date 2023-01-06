@@ -59,7 +59,7 @@ for version; do
   for phpVersion in "${phpVersions[@]}"; do
     export phpVersion
 
-    # get the pecl values (we may want to move this to versions.json)
+    # get the zts values (we may want to move this to versions.json)
     zts="$(jq -r '.[env.version].phpVersions[env.phpVersion].zts' versions-helper.json)"
     export zts
 
@@ -67,7 +67,7 @@ for version; do
       export variant
 
       # the path to this variant folder
-      dir="$version/php$phpVersion/$variant"
+      dir="$version/$phpVersion/$variant"
       mkdir -p "$dir"
 
       echo "processing $dir ..."

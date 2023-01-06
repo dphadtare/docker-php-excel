@@ -4,12 +4,12 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM php:7.3-apache
-LABEL maintainer="Chase Pierce <cpierce@entrata.com> (@syntaqx), Dattatray Phadatare <dphadatare@entrata.com> (@dphadtare)"
+FROM --platform=$BUILDPLATFORM php:8.1-apache
+LABEL maintainer="Dattatray Phadatare <dattatrayphadtare@gmail.com> (@dphadtare)"
 
 ARG DISTRO=lin
 ARG LIBXL_VER=4.0.4
-ARG LIBXL_ZTS=20180731
+ARG LIBXL_ZTS=20210902
 ARG libxl_file=libxl-${DISTRO}-${LIBXL_VER}
 
 # Install libXL
@@ -37,3 +37,4 @@ RUN set -ex; \
   && cp /tmp/libxl-${LIBXL_VER}.0/lib64/libxl.so /usr/lib/libxl.so \
   && apt-get remove -y wget git \
   && docker-php-source delete
+
